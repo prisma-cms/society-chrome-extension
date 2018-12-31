@@ -1,6 +1,8 @@
 1.2.1
 =================================
 - Public release
+- Added MainMenu
+- Move Renderer in separated file
 
 1.2.0
 =================================
