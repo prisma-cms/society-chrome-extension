@@ -56,22 +56,22 @@ class SocietyContext extends Component {
 
 
     const {
-      UserNoNestingFragment,
+      ChatRoomNoNestingFragment,
     } = queryFragments;
 
 
 
-    const usersConnection = `
-      query usersConnection (
-        $where: UserWhereInput
-        $orderBy: UserOrderByInput
+    const chatRoomsConnection = `
+      query chatRoomsConnection (
+        $where: ChatRoomWhereInput
+        $orderBy: ChatRoomOrderByInput
         $skip: Int
         $after: String
         $before: String
         $first: Int
         $last: Int
       ){
-        objectsConnection: usersConnection (
+        objectsConnection: chatRoomsConnection (
           where: $where
           orderBy: $orderBy
           skip: $skip
@@ -85,27 +85,27 @@ class SocietyContext extends Component {
           }
           edges{
             node{
-              ...UserNoNesting
+              ...ChatRoomNoNesting
             }
           }
         }
       }
 
-      ${UserNoNestingFragment}
+      ${ChatRoomNoNestingFragment}
     `;
 
 
-    const users = `
-      query users (
-        $where: UserWhereInput
-        $orderBy: UserOrderByInput
+    const chatRooms = `
+      query chatRooms (
+        $where: ChatRoomWhereInput
+        $orderBy: ChatRoomOrderByInput
         $skip: Int
         $after: String
         $before: String
         $first: Int
         $last: Int
       ){
-        objects: users (
+        objects: chatRooms (
           where: $where
           orderBy: $orderBy
           skip: $skip
@@ -114,34 +114,34 @@ class SocietyContext extends Component {
           first: $first
           last: $last
         ){
-          ...UserNoNesting
+          ...ChatRoomNoNesting
         }
       }
 
-      ${UserNoNestingFragment}
+      ${ChatRoomNoNestingFragment}
     `;
 
 
-    const user = `
-      query user (
-        $where: UserWhereUniqueInput!
+    const chatRoom = `
+      query chatRoom (
+        $where: ChatRoomWhereUniqueInput!
       ){
-        object: users (
+        object: chatRooms (
           where: $where
         ){
-          ...UserNoNesting
+          ...ChatRoomNoNesting
         }
       }
 
-      ${UserNoNestingFragment}
+      ${ChatRoomNoNestingFragment}
     `;
 
 
-    const createUserProcessor = `
-      mutation createUserProcessor(
-        $data: UserCreateInput!
+    const createChatRoomProcessor = `
+      mutation createChatRoomProcessor(
+        $data: ChatRoomCreateInput!
       ) {
-        response: createUserProcessor(
+        response: createChatRoomProcessor(
           data: $data
         ){
           success
@@ -151,21 +151,21 @@ class SocietyContext extends Component {
             message
           }
           data{
-            ...UserNoNesting
+            ...ChatRoomNoNesting
           }
         }
       }
 
-      ${UserNoNestingFragment}
+      ${ChatRoomNoNestingFragment}
     `;
 
 
-    const updateUserProcessor = `
-      mutation updateUserProcessor(
-        $data: UserUpdateInput!
-        $where: UserWhereUniqueInput!
+    const updateChatRoomProcessor = `
+      mutation updateChatRoomProcessor(
+        $data: ChatRoomUpdateInput!
+        $where: ChatRoomWhereUniqueInput!
       ) {
-        response: updateUserProcessor(
+        response: updateChatRoomProcessor(
           data: $data
           where: $where
         ){
@@ -176,22 +176,22 @@ class SocietyContext extends Component {
             message
           }
           data{
-            ...UserNoNesting
+            ...ChatRoomNoNesting
           }
         }
       }
 
-      ${UserNoNestingFragment}
+      ${ChatRoomNoNestingFragment}
     `;
 
 
 
     return {
-      usersConnection,
-      users,
-      user,
-      createUserProcessor,
-      updateUserProcessor,
+      chatRoomsConnection,
+      chatRooms,
+      chatRoom,
+      createChatRoomProcessor,
+      updateChatRoomProcessor,
     }
 
   }

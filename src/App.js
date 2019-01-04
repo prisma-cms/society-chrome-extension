@@ -10,10 +10,16 @@ import {
 import SubscriptionProvider from "./components/SubscriptionProvider";
 import ContextProvider from "./components/ContextProvider";
 
+
+import ChatRooms from "./components/ChatRooms";
+
+
 export {
   Context,
   ContextProvider,
   SubscriptionProvider,
+
+  ChatRooms,
 }
 
 class App extends Component {

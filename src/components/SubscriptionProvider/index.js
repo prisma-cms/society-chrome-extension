@@ -47,9 +47,9 @@ export default class SubscriptionProvider extends Component {
     } = this.state;
 
 
-    const subscribeUser = gql`
-      subscription user{
-        user{
+    const subscribeChatRoom = gql`
+      subscription chatRoom{
+        chatRoom{
           mutation
           node{
             id
@@ -58,9 +58,9 @@ export default class SubscriptionProvider extends Component {
       }
     `;
 
-    const userSub = await client
+    const chatRoomSub = await client
       .subscribe({
-        query: subscribeUser,
+        query: subscribeChatRoom,
         variables: {
         },
       })
@@ -76,7 +76,9 @@ export default class SubscriptionProvider extends Component {
       });
 
 
-    subscriptions.push(userSub);
+    subscriptions.push(chatRoomSub);
+
+
 
     this.setState({
       subscriptions,

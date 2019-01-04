@@ -22,7 +22,7 @@ class ChatRooms extends Component {
 
   static defaultProps = {
     View,
-    first: 10,
+    // first: 10,
   }
 
   static contextType = Context;
@@ -50,7 +50,6 @@ class ChatRooms extends Component {
   }
 
 
-
   render() {
 
     const {
@@ -65,14 +64,6 @@ class ChatRooms extends Component {
     return <Renderer
       {...other}
     />
-
-    // return <TestContext.Consumer>
-    //   {(props) => {
-
-    //     console.log("TestContext props", props);
-    //     return "TestContext"
-    //   }}
-    // </TestContext.Consumer>;
   }
 }
 

@@ -1,15 +1,38 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from "prop-types";
 
 import App, {
-  ContextProvider, 
+  ContextProvider,
   SubscriptionProvider,
+
+  ChatRooms,
 } from "../../App";
 
 import { Renderer as PrismaCmsRenderer } from '@prisma-cms/front'
 
 import MainMenu from './MainMenu';
 
+import { withStyles } from 'material-ui';
+
+
+const styles = theme => {
+
+  return {
+    root: {
+      border: "1px solid",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      
+      "& #Renderer--body": {
+        flexGrow: 1,
+        border: "1px solid blue",
+        overflow: "auto",
+      },
+    },
+  };
+
+}
 
 class DevRenderer extends PrismaCmsRenderer {
 
@@ -35,6 +58,11 @@ class DevRenderer extends PrismaCmsRenderer {
         path: "/",
         component: App,
       },
+      {
+        exact: true,
+        path: "/chat-rooms",
+        component: ChatRooms,
+      },
       // {
       //   path: "*",
       //   render: props => this.renderOtherPages(props),
@@ -54,19 +82,35 @@ class DevRenderer extends PrismaCmsRenderer {
 
     const {
       pure,
+      classes,
       ...other
     } = this.props;
 
-    return <ContextProvider>
-      <SubscriptionProvider>
-        {pure ? <App
-          {...other}
-        /> : super.render()}
-      </SubscriptionProvider>
-    </ContextProvider>;
+    return <Fragment>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            html, body, #root {
+              height: 100%;
+            }
+          `,
+        }}
+      />
+      <div
+        className={classes.root}
+      >
+        <ContextProvider>
+          <SubscriptionProvider>
+            {pure ? <App
+              {...other}
+            /> : super.render()}
+          </SubscriptionProvider>
+        </ContextProvider>
+      </div>
+    </Fragment>;
 
   }
 
 }
 
-export default DevRenderer;
+export default withStyles(styles)(DevRenderer);
