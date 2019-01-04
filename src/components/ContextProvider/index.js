@@ -8,6 +8,7 @@ import {
   Context,
 } from "../../App";
 
+import * as UI from "../ui";
 
 class ContextProvider extends Component {
 
@@ -47,6 +48,7 @@ class ContextProvider extends Component {
         ...query,
         ...this.prepareQuery(),
       },
+      ...UI,
     });
 
     return <Context.Provider
@@ -61,6 +63,14 @@ class ContextProvider extends Component {
   prepareQuery() {
 
 
+    return {
+      ...this.prepareRoomQuery(),
+    }
+
+  }
+
+
+  prepareRoomQuery() {
     const {
       queryFragments,
     } = this.context;
@@ -68,8 +78,21 @@ class ContextProvider extends Component {
 
     const {
       ChatRoomNoNestingFragment,
+      UserNoNestingFragment,
     } = queryFragments;
 
+
+    const chatRoomFragment = `
+      fragment chatRoom on ChatRoom {
+        ...ChatRoomNoNesting
+        CreatedBy{
+          ...UserNoNesting
+        }
+      }
+
+      ${ChatRoomNoNestingFragment}
+      ${UserNoNestingFragment}
+    `;
 
 
     const chatRoomsConnection = `
@@ -96,13 +119,13 @@ class ContextProvider extends Component {
           }
           edges{
             node{
-              ...ChatRoomNoNesting
+              ...chatRoom
             }
           }
         }
       }
 
-      ${ChatRoomNoNestingFragment}
+      ${chatRoomFragment}
     `;
 
 
@@ -125,11 +148,11 @@ class ContextProvider extends Component {
           first: $first
           last: $last
         ){
-          ...ChatRoomNoNesting
+          ...chatRoom
         }
       }
 
-      ${ChatRoomNoNestingFragment}
+      ${chatRoomFragment}
     `;
 
 
@@ -137,14 +160,14 @@ class ContextProvider extends Component {
       query chatRoom (
         $where: ChatRoomWhereUniqueInput!
       ){
-        object: chatRooms (
+        object: chatRoom(
           where: $where
         ){
-          ...ChatRoomNoNesting
+          ...chatRoom
         }
       }
 
-      ${ChatRoomNoNestingFragment}
+      ${chatRoomFragment}
     `;
 
 
@@ -162,12 +185,12 @@ class ContextProvider extends Component {
             message
           }
           data{
-            ...ChatRoomNoNesting
+            ...chatRoom
           }
         }
       }
 
-      ${ChatRoomNoNestingFragment}
+      ${chatRoomFragment}
     `;
 
 
@@ -187,14 +210,13 @@ class ContextProvider extends Component {
             message
           }
           data{
-            ...ChatRoomNoNesting
+            ...chatRoom
           }
         }
       }
 
-      ${ChatRoomNoNestingFragment}
+      ${chatRoomFragment}
     `;
-
 
 
     return {
@@ -204,7 +226,6 @@ class ContextProvider extends Component {
       createChatRoomProcessor,
       updateChatRoomProcessor,
     }
-
   }
 
 }

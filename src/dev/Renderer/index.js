@@ -6,6 +6,7 @@ import App, {
   SubscriptionProvider,
 
   ChatRooms,
+  ChatRoom,
 } from "../../App";
 
 import { Renderer as PrismaCmsRenderer } from '@prisma-cms/front'
@@ -62,6 +63,28 @@ class DevRenderer extends PrismaCmsRenderer {
         exact: true,
         path: "/chat-rooms",
         component: ChatRooms,
+      },
+      {
+        exact: true,
+        path: "/chat-rooms/:id",
+        render: props => {
+
+          const {
+            match: {
+              params: {
+                id,
+              },
+            },
+          } = props;
+
+          return <ChatRoom
+            key={id}
+            where={{
+              id,
+            }}
+            {...props}
+          />
+        },
       },
       // {
       //   path: "*",

@@ -20,12 +20,32 @@ class ChatRoomsListView extends TableView {
 
   getColumns() {
 
+    const {
+      ChatRoomLink,
+      UserLink,
+    } = this.context;
+
     return [
-      {
-        id: "id",
-      },
+      // {
+      //   id: "id",
+      // },
       {
         id: "name",
+        renderer: (value, record) => {
+
+          return record ? <ChatRoomLink
+            object={record}
+          /> : null;
+        },
+      },
+      {
+        id: "CreatedBy",
+        renderer: (value) => {
+
+          return value ? <UserLink
+            user={value}
+          /> : null;
+        },
       },
     ]
 
@@ -34,4 +54,6 @@ class ChatRoomsListView extends TableView {
 }
 
 
-export default withStyles(styles)(ChatRoomsListView);
+export default withStyles(styles)(props => <ChatRoomsListView
+  {...props}
+/>);

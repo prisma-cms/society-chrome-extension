@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-import {
-  Context,
-} from "../../App";
 
-import View from "./View/List";
+import View from "../View/Object";
+
+import { Context } from '../../../App';
 
 
-class ChatRooms extends Component {
+class ChatRoom extends Component {
 
 
   static propTypes = {
@@ -41,11 +40,15 @@ class ChatRooms extends Component {
 
     const {
       query: {
-        chatRoomsConnection,
+        chatRoom,
+        updateChatRoomProcessor,
       },
     } = this.context;
 
-    this.Renderer = graphql(gql(chatRoomsConnection))(View);
+    this.Renderer = compose(
+      graphql(gql(chatRoom)),
+      graphql(gql(updateChatRoomProcessor)),
+    )(View);
 
   }
 
@@ -68,4 +71,4 @@ class ChatRooms extends Component {
 }
 
 
-export default ChatRooms; 
+export default ChatRoom; 
