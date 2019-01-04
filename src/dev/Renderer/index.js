@@ -19,14 +19,14 @@ const styles = theme => {
 
   return {
     root: {
-      border: "1px solid",
+      // border: "1px solid",
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      
+
       "& #Renderer--body": {
         flexGrow: 1,
-        border: "1px solid blue",
+        // border: "1px solid blue",
         overflow: "auto",
       },
     },
@@ -78,6 +78,17 @@ class DevRenderer extends PrismaCmsRenderer {
   }
 
 
+  renderWrapper() {
+
+    return <ContextProvider>
+      <SubscriptionProvider>
+        {super.renderWrapper()}
+      </SubscriptionProvider>
+    </ContextProvider>;
+
+  }
+
+
   render() {
 
     const {
@@ -99,13 +110,9 @@ class DevRenderer extends PrismaCmsRenderer {
       <div
         className={classes.root}
       >
-        <ContextProvider>
-          <SubscriptionProvider>
-            {pure ? <App
-              {...other}
-            /> : super.render()}
-          </SubscriptionProvider>
-        </ContextProvider>
+        {pure ? <App
+          {...other}
+        /> : super.render()}
       </div>
     </Fragment>;
 
@@ -113,4 +120,6 @@ class DevRenderer extends PrismaCmsRenderer {
 
 }
 
-export default withStyles(styles)(DevRenderer);
+export default withStyles(styles)(props => <DevRenderer
+  {...props}
+/>);

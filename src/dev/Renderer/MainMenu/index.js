@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 
 import UserItem from './User';
 import { withStyles } from 'material-ui/styles';
+import { Context } from '../../../App';
 
 // import Modal from './AuthModal';
 
@@ -45,12 +46,7 @@ export class MainMenu extends Component {
   }
 
 
-  static contextTypes = {
-    logout: PropTypes.func.isRequired,
-    onAuthSuccess: PropTypes.func.isRequired,
-    user: PropTypes.object,
-    openLoginForm: PropTypes.func.isRequired,
-  }
+  static contextType = Context;
 
   state = {
     // opened: false,
@@ -233,4 +229,6 @@ export class MainMenu extends Component {
   }
 }
 
-export default withStyles(styles)(MainMenu);
+export default withStyles(styles)(props => <MainMenu
+  {...props}
+/>);
