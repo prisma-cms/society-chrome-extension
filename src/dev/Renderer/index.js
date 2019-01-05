@@ -7,6 +7,9 @@ import App, {
 
   ChatRooms,
   ChatRoom,
+
+  ChatMessages,
+  ChatMessage,
 } from "../../App";
 
 import { Renderer as PrismaCmsRenderer } from '@prisma-cms/front'
@@ -26,7 +29,7 @@ const styles = theme => {
       flexDirection: "column",
 
       "& #Renderer--body": {
-        flexGrow: 1,
+        flex: 1,
         // border: "1px solid blue",
         overflow: "auto",
       },
@@ -78,6 +81,33 @@ class DevRenderer extends PrismaCmsRenderer {
           } = props;
 
           return <ChatRoom
+            key={id}
+            where={{
+              id,
+            }}
+            {...props}
+          />
+        },
+      },
+      {
+        exact: true,
+        path: "/chat-messages",
+        component: ChatMessages,
+      },
+      {
+        exact: true,
+        path: "/chat-messages/:id",
+        render: props => {
+
+          const {
+            match: {
+              params: {
+                id,
+              },
+            },
+          } = props;
+
+          return <ChatMessage
             key={id}
             where={{
               id,

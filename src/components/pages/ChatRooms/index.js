@@ -6,34 +6,24 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-import {
-  Context,
-} from "../../App";
 
 import View from "./View/List";
 
+import ListPage from "../List";
 
-class ChatRooms extends Component {
+
+class ChatRoomsPage extends ListPage {
 
 
   static propTypes = {
+    ...ListPage.propTypes,
     View: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
+    ...ListPage.defaultProps,
     View,
-    // first: 10,
-  }
-
-  static contextType = Context;
-
-
-  constructor(props) {
-
-    console.log("ChatRooms constructor");
-
-    super(props)
-
+    first: 10,
   }
 
 
@@ -47,7 +37,18 @@ class ChatRooms extends Component {
 
     this.Renderer = graphql(gql(chatRoomsConnection))(View);
 
+    super.componentWillMount && super.componentWillMount();
   }
+
+
+  setPageMeta(meta) {
+
+    return super.setPageMeta({
+      title: "Чат-комнаты",
+      ...meta,
+    });
+  }
+
 
 
   render() {
@@ -58,14 +59,23 @@ class ChatRooms extends Component {
 
     const {
       View,
+      where,
       ...other
     } = this.props;
 
+    const filters = this.getFilters();
+
+
     return <Renderer
+      where={{
+        ...where,
+        ...filters,
+      }}
+      {...this.getPaginationParams()}
       {...other}
     />
   }
 }
 
 
-export default ChatRooms; 
+export default ChatRoomsPage; 

@@ -5,49 +5,48 @@ import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
-
-
 import View from "../View/Object";
 
-import { Context } from '../../../App';
+import ObjectPage from "../../Object";
 
 
-class ChatRoom extends Component {
+class ChatMessage extends ObjectPage {
 
 
   static propTypes = {
+    ...ObjectPage.propTypes,
     View: PropTypes.func.isRequired,
   };
 
+
   static defaultProps = {
+    ...ObjectPage.defaultProps,
     View,
     // first: 10,
-  }
-
-  static contextType = Context;
+  } 
 
 
-  constructor(props) {
+  // constructor(props) {
 
-    console.log("ChatRooms constructor");
+  //   console.log("ChatMessages constructor");
 
-    super(props)
+  //   super(props)
 
-  }
+  // }
 
 
   componentWillMount() {
 
     const {
       query: {
-        chatRoom,
-        updateChatRoomProcessor,
+        chatMessage,
+        updateChatMessageProcessor,
       },
     } = this.context;
 
     this.Renderer = compose(
-      graphql(gql(chatRoom)),
-      graphql(gql(updateChatRoomProcessor)),
+      graphql(gql(chatMessage)),
+      graphql(gql(updateChatMessageProcessor)),
     )(View);
 
   }
@@ -71,4 +70,4 @@ class ChatRoom extends Component {
 }
 
 
-export default ChatRoom; 
+export default ChatMessage; 

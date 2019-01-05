@@ -152,6 +152,20 @@ export class MainMenu extends Component {
           <Grid
             item
           >
+            <Link
+              to="/chat-messages"
+            >
+              <Typography
+                component="span"
+              >
+                Chat messages
+            </Typography>
+            </Link>
+          </Grid>
+
+          <Grid
+            item
+          >
             <a
               href="/graphql-voyager"
             >

@@ -9,8 +9,11 @@ import SubscriptionProvider from "./components/SubscriptionProvider";
 import ContextProvider from "./components/ContextProvider";
 
 
-import ChatRooms from "./components/ChatRooms";
-import ChatRoom from "./components/ChatRooms/ChatRoom";
+import ChatRooms from "./components/pages/ChatRooms";
+import ChatRoom from "./components/pages/ChatRooms/ChatRoom";
+
+import ChatMessages from "./components/pages/ChatMessages";
+import ChatMessage from "./components/pages/ChatMessages/ChatMessage";
 
 
 export {
@@ -20,6 +23,9 @@ export {
 
   ChatRooms,
   ChatRoom,
+
+  ChatMessages,
+  ChatMessage,
 }
 
 class App extends Component {

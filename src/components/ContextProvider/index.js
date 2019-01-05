@@ -64,13 +64,14 @@ class ContextProvider extends Component {
 
 
     return {
-      ...this.prepareRoomQuery(),
+      ...this.prepareChatRoomQuery(),
+      ...this.prepareChatMessageQuery(),
     }
 
   }
 
 
-  prepareRoomQuery() {
+  prepareChatRoomQuery() {
     const {
       queryFragments,
     } = this.context;
@@ -86,6 +87,9 @@ class ContextProvider extends Component {
       fragment chatRoom on ChatRoom {
         ...ChatRoomNoNesting
         CreatedBy{
+          ...UserNoNesting
+        }
+        Members{
           ...UserNoNesting
         }
       }
@@ -225,6 +229,170 @@ class ContextProvider extends Component {
       chatRoom,
       createChatRoomProcessor,
       updateChatRoomProcessor,
+    }
+  }
+
+
+  prepareChatMessageQuery() {
+    const {
+      queryFragments,
+    } = this.context;
+
+
+    const {
+      ChatRoomNoNestingFragment,
+      ChatMessageNoNestingFragment,
+      UserNoNestingFragment,
+    } = queryFragments;
+
+
+    const chatMessageFragment = `
+      fragment chatMessage on ChatMessage {
+        ...ChatMessageNoNesting
+        CreatedBy{
+          ...UserNoNesting
+        }
+        Room{
+          ...ChatRoomNoNesting
+        }
+      }
+
+      ${ChatMessageNoNestingFragment}
+      ${UserNoNestingFragment}
+      ${ChatRoomNoNestingFragment}
+    `;
+
+
+    const chatMessagesConnection = `
+      query chatMessagesConnection (
+        $where: ChatMessageWhereInput
+        $orderBy: ChatMessageOrderByInput
+        $skip: Int
+        $after: String
+        $before: String
+        $first: Int
+        $last: Int
+      ){
+        objectsConnection: chatMessagesConnection (
+          where: $where
+          orderBy: $orderBy
+          skip: $skip
+          after: $after
+          before: $before
+          first: $first
+          last: $last
+        ){
+          aggregate{
+            count
+          }
+          edges{
+            node{
+              ...chatMessage
+            }
+          }
+        }
+      }
+
+      ${chatMessageFragment}
+    `;
+
+
+    const chatMessages = `
+      query chatMessages (
+        $where: ChatMessageWhereInput
+        $orderBy: ChatMessageOrderByInput
+        $skip: Int
+        $after: String
+        $before: String
+        $first: Int
+        $last: Int
+      ){
+        objects: chatMessages (
+          where: $where
+          orderBy: $orderBy
+          skip: $skip
+          after: $after
+          before: $before
+          first: $first
+          last: $last
+        ){
+          ...chatMessage
+        }
+      }
+
+      ${chatMessageFragment}
+    `;
+
+
+    const chatMessage = `
+      query chatMessage (
+        $where: ChatMessageWhereUniqueInput!
+      ){
+        object: chatMessage(
+          where: $where
+        ){
+          ...chatMessage
+        }
+      }
+
+      ${chatMessageFragment}
+    `;
+
+
+    const createChatMessageProcessor = `
+      mutation createChatMessageProcessor(
+        $data: ChatMessageCreateInput!
+      ) {
+        response: createChatMessageProcessor(
+          data: $data
+        ){
+          success
+          message
+          errors{
+            key
+            message
+          }
+          data{
+            ...chatMessage
+          }
+        }
+      }
+
+      ${chatMessageFragment}
+    `;
+
+
+    const updateChatMessageProcessor = `
+      mutation updateChatMessageProcessor(
+        $data: ChatMessageUpdateInput!
+        $where: ChatMessageWhereUniqueInput!
+      ) {
+        response: updateChatMessageProcessor(
+          data: $data
+          where: $where
+        ){
+          success
+          message
+          errors{
+            key
+            message
+          }
+          data{
+            ...chatMessage
+          }
+        }
+      }
+
+      ${chatMessageFragment}
+    `;
+
+
+    return {
+      chatMessagesConnection,
+      chatMessages,
+      chatMessage,
+      createChatMessageProcessor,
+      updateChatMessageProcessor,
     }
   }
 
