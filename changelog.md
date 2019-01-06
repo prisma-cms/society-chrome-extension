@@ -1,3 +1,9 @@
+1.4.0
+=================================
+- Added ChatRooms
+- Added ChatMessages
+- Added Notices
+
 1.3.2
 =================================
 - Fix contexts
