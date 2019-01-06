@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 
 import EditableView from "../../../../view/Object/Editable";
 
-import { withStyles, IconButton } from 'material-ui';
+import { withStyles, IconButton, CircularProgress, Paper } from 'material-ui';
 
 import SendIcon from "material-ui-icons/Send";
+import moment from "moment";
+import { Typography } from 'material-ui';
 
 const styles = theme => {
 
@@ -15,11 +17,19 @@ const styles = theme => {
       // height: "100%",
       // display: "flex",
       // flexDirection: "column",
+      padding: 10,
     },
   }
 }
 
+
 class ChatMessageView extends EditableView {
+
+
+  static defaultProps = {
+    ...EditableView.defaultProps,
+    SaveIcon: SendIcon,
+  }
 
 
   canEdit() {
@@ -51,11 +61,29 @@ class ChatMessageView extends EditableView {
     return id;
   }
 
+
+  renderHeader() {
+    return null;
+  }
+
+
+  renderResetButton() {
+
+    const {
+      id,
+    } = this.getObjectWithMutations();
+
+    return id ? super.renderResetButton() : null;
+  }
+
+
   renderDefaultView() {
 
     const {
       Grid,
       Editor,
+      UserLink,
+      ChatRoomLink,
     } = this.context;
 
     const {
@@ -63,12 +91,22 @@ class ChatMessageView extends EditableView {
     } = this.props;
 
     const {
+    } = this.state;
+
+
+    const {
       id: objectId,
-      text,
+      content,
+      createdAt,
+      updatedAt,
+      Room,
+      CreatedBy,
     } = this.getObjectWithMutations();
 
 
-    return <div
+    const inEditMode = this.isInEditMode();
+
+    return <Paper
       className={classes.chat}
     >
       <Grid
@@ -79,43 +117,94 @@ class ChatMessageView extends EditableView {
 
         <Grid
           item
-          xs={12}
+        >
+          {CreatedBy ? <div
+            style={{
+              marginTop: 20,
+            }}
+          >
+            <UserLink
+              user={CreatedBy}
+              showName={false}
+            />
+          </div> : null}
+        </Grid>
+
+        <Grid
+          item
+          xs
         >
           <Grid
             container
             spacing={8}
           >
-
             <Grid
               item
-              xs
+              xs={12}
             >
-              <Editor
-                value={text}
-                readOnly={false}
-                onChange={text => this.updateObject({
-                  text,
-                })}
-              />
-
-
+              <Grid
+                container
+                spacing={8}
+                alignItems="flex-end"
+              >
+                <Grid
+                  item
+                >
+                  {CreatedBy ? <UserLink
+                    user={CreatedBy}
+                    withAvatar={false}
+                  /> : null}
+                </Grid>
+                <Grid
+                  item
+                >
+                  <Typography
+                    color="textSecondary"
+                  >
+                    {createdAt && moment(createdAt).format("lll") || null}
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs
+                >
+                </Grid>
+                <Grid
+                  item
+                >
+                  {Room ? <ChatRoomLink
+                    object={Room}
+                  /> : null}
+                </Grid>
+              </Grid>
             </Grid>
 
             <Grid
               item
+              xs={12}
             >
-              <IconButton
-                onClick={event => this.save()}
-              >
-                <SendIcon />
-              </IconButton>
+
+              <Editor
+                key={`${updatedAt}-${inEditMode}`}
+                value={content}
+                readOnly={!inEditMode}
+                onChange={content => this.updateObject({
+                  content,
+                })}
+              />
             </Grid>
 
           </Grid>
         </Grid>
 
+        <Grid
+          item
+        >
+          {this.getButtons()}
+        </Grid>
+
       </Grid>
-    </div>
+    </Paper>
 
   }
 

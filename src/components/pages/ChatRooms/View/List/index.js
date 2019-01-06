@@ -70,6 +70,8 @@ class ChatRoomsListView extends TableView {
               >
                 <UserLink
                   user={n}
+                  showName={false}
+                  size="small"
                 />
               </Grid>
             })}

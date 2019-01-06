@@ -35,6 +35,10 @@ class ChatMessagesPage extends ListPage {
       },
     } = this.context;
 
+    const {
+      View,
+    } = this.props;
+
     this.Renderer = graphql(gql(chatMessagesConnection))(View);
 
     super.componentWillMount && super.componentWillMount();

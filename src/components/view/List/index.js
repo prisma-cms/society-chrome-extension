@@ -18,6 +18,11 @@ class TableView extends TableViewProto {
   };
 
 
+  renderContent() {
+
+    return super.render();
+  }
+
   render() {
 
     const {
@@ -42,23 +47,26 @@ class TableView extends TableViewProto {
       aggregate,
     } = objectsConnection || {};
 
-    
+
     const {
       count = 0,
     } = aggregate || {};
 
 
     return <Fragment>
-      {super.render()}
+      {this.renderContent()}
 
-      <Pagination
-        limit={limit}
-        total={count}
-        page={page || 1}
-        style={{
-          marginTop: 20,
-        }}
-      />
+      {limit && count ?
+        <Pagination
+          limit={limit}
+          total={count}
+          page={page || 1}
+          style={{
+            marginTop: 20,
+          }}
+        />
+        : null
+      }
 
     </Fragment>
   }

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from "prop-types";
 
+import "moment/locale/ru";
+
 import App, {
   ContextProvider,
   SubscriptionProvider,

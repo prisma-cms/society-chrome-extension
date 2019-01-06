@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@prisma-cms/context": "latest",
-    "graphql": "14.0.2"
+    "graphql": "14.0.2",
+    "react-scroll": "^1.7.10"
   },
   "devDependencies": {
     "@prisma-cms/front": "latest",

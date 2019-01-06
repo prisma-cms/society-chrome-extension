@@ -84,6 +84,38 @@ export default class SubscriptionProvider extends Component {
     subscriptions.push(chatRoomSub);
 
 
+    const subscribeChatMessage = gql`
+      subscription chatMessage{
+        chatMessage{
+          mutation
+          node{
+            id
+          }
+        }
+      }
+    `;
+
+    const chatMessageSub = await client
+      .subscribe({
+        query: subscribeChatMessage,
+        variables: {
+        },
+      })
+      .subscribe({
+        next: async (data) => {
+
+          await this.reloadData();
+
+        },
+        error(error) {
+          console.error('subscribeCalls callback with error: ', error)
+        },
+      });
+
+
+    subscriptions.push(chatMessageSub);
+
+
 
     this.setState({
       subscriptions,
