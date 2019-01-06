@@ -9,6 +9,7 @@ import App, {
 
   ChatRooms,
   ChatRoom,
+  CreateChatRoom,
 
   ChatMessages,
   ChatMessage,
@@ -68,6 +69,11 @@ class DevRenderer extends PrismaCmsRenderer {
         exact: true,
         path: "/chat-rooms",
         component: ChatRooms,
+      },
+      {
+        exact: true,
+        path: "/chat-rooms/create",
+        component: CreateChatRoom,
       },
       {
         exact: true,

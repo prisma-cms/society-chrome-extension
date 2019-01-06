@@ -16,6 +16,11 @@ class ChatRoomMessages extends ChatMessagesList {
     View,
   }
 
+  setPageMeta(meta) {
+ 
+  }
+
+
 }
 
 

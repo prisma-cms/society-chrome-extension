@@ -8,9 +8,11 @@ import Context from '@prisma-cms/context';
 import SubscriptionProvider from "./components/SubscriptionProvider";
 import ContextProvider from "./components/ContextProvider";
 
+import Notifications from "./components/Notifications";
 
 import ChatRooms from "./components/pages/ChatRooms";
 import ChatRoom from "./components/pages/ChatRooms/ChatRoom";
+import CreateChatRoom from "./components/pages/ChatRooms/ChatRoom/Create";
 
 import ChatMessages from "./components/pages/ChatMessages";
 import ChatMessage from "./components/pages/ChatMessages/ChatMessage";
@@ -21,8 +23,11 @@ export {
   ContextProvider,
   SubscriptionProvider,
 
+  Notifications,
+
   ChatRooms,
   ChatRoom,
+  CreateChatRoom,
 
   ChatMessages,
   ChatMessage,

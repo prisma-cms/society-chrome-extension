@@ -5,6 +5,17 @@ import EditableView from "apollo-cms/lib/DataView/Object/Editable";
 
 class EditableObject extends EditableView {
 
+
+  static propTypes = {
+    ...EditableView.propTypes,
+    setPageMeta: PropTypes.func,
+  }
+
+  // static defaultProps = {
+  //   ...EditableView.defaultProps,
+  // }
+
+
   getTextField(props) {
 
     const inEditMode = this.isInEditMode();
@@ -20,6 +31,33 @@ class EditableObject extends EditableView {
     }
 
     return super.getTextField(props);
+  }
+
+
+  setPageMeta(meta) {
+
+    const {
+      setPageMeta,
+      data: {
+        object,
+      },
+    } = this.props;
+
+    
+    if (setPageMeta) {
+      
+      setPageMeta(object);
+
+    }
+
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+
+    this.setPageMeta();
+
+    super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
   }
 
 }

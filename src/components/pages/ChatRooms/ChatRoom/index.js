@@ -23,7 +23,7 @@ class ChatRoom extends ObjectPage {
     ...ObjectPage.defaultProps,
     View,
     // first: 10,
-  } 
+  }
 
 
   // constructor(props) {
@@ -37,20 +37,28 @@ class ChatRoom extends ObjectPage {
 
   componentWillMount() {
 
-    const {
-      query: {
-        chatRoom,
-        updateChatRoomProcessor,
-      },
-    } = this.context;
+    if (!this.Renderer) {
 
-    this.Renderer = compose(
-      graphql(gql(chatRoom)),
-      graphql(gql(updateChatRoomProcessor)),
-    )(View);
+      const {
+        View,
+      } = this.props;
 
+      const {
+        query: {
+          chatRoom,
+          updateChatRoomProcessor,
+        },
+      } = this.context;
+
+      this.Renderer = compose(
+        graphql(gql(chatRoom)),
+        graphql(gql(updateChatRoomProcessor)),
+      )(View);
+
+    }
+
+    super.componentWillMount && super.componentWillMount();
   }
-
 
   render() {
 
@@ -65,6 +73,21 @@ class ChatRoom extends ObjectPage {
 
     return <Renderer
       {...other}
+      onSave={this.onSave}
+      setPageMeta={object => {
+
+        let {
+          id,
+          name,
+        } = object || {};
+
+        name = name || id;
+
+        return this.setPageMeta({
+          title: name && `Чат-комната ${name}` || undefined,
+          status: id ? 200 : 404,
+        })
+      }}
     />
   }
 }

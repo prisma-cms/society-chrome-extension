@@ -24,7 +24,7 @@ const styles = theme => {
     membersShortList: {
       alignItems: "start",
       display: "inline-flex",
-      
+
       "& > *": {
         margin: 2,
       },
@@ -85,11 +85,13 @@ class ChatRoomView extends EditableView {
 
     const object = this.getObjectWithMutations();
     const inEditMode = this.isInEditMode();
+    const canEdit = this.canEdit();
 
 
     const {
       isPublic,
       Members,
+      code,
     } = object;
 
 
@@ -142,6 +144,7 @@ class ChatRoomView extends EditableView {
           this.getTextField({
             name: "name",
             label: "Название комнаты",
+            helperText: "Название может быть произвольным",
           })
           : <Typography
             variant="title"
@@ -152,6 +155,21 @@ class ChatRoomView extends EditableView {
         }
 
       </Grid>
+
+      {canEdit ?
+        <Grid
+          item
+        >
+          {inEditMode ?
+            this.getTextField({
+              name: "code",
+              label: "Код",
+              helperText: "Уникальный ключ комнаты",
+            })
+            : code}
+        </Grid>
+        :
+        null}
 
       <Grid
         item

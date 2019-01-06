@@ -10,34 +10,17 @@ import Typography from 'material-ui/Typography';
 
 import { Link } from 'react-router-dom';
 
-import UserItem from './User';
 import { withStyles } from 'material-ui/styles';
-import { Context } from '../../../App';
+import { Context, Notifications } from '../../../App';
 
 // import Modal from './AuthModal';
 
-const styles = theme => {
+import {
+  styles,
+} from "@prisma-cms/front/lib/components/App/Renderer/MainMenu";
 
-
-  const {
-    palette: {
-      type: paletteType,
-    },
-  } = theme;
-
-
-  return {
-    root: {
-
-      // Fix contrast 
-      "& a, & button": {
-        "&, & *": {
-          color: paletteType === "light" ? "#fff" : undefined,
-        },
-      },
-    },
-  }
-}
+// import UserItem from './User';
+import UserItem from "@prisma-cms/front/lib/components/App/Renderer/MainMenu/User";
 
 export class MainMenu extends Component {
 
@@ -115,6 +98,7 @@ export class MainMenu extends Component {
             >
               <Typography
                 component="span"
+                className={classes.link}
               >
                 Main page
             </Typography>
@@ -129,6 +113,7 @@ export class MainMenu extends Component {
             >
               <Typography
                 component="span"
+                className={classes.link}
               >
                 Users
             </Typography>
@@ -143,6 +128,7 @@ export class MainMenu extends Component {
             >
               <Typography
                 component="span"
+                className={classes.link}
               >
                 Chat rooms
             </Typography>
@@ -157,6 +143,7 @@ export class MainMenu extends Component {
             >
               <Typography
                 component="span"
+                className={classes.link}
               >
                 Chat messages
             </Typography>
@@ -171,6 +158,7 @@ export class MainMenu extends Component {
             >
               <Typography
                 component="span"
+                className={classes.link}
               >
                 Graphql Voyager
               </Typography>
@@ -188,12 +176,25 @@ export class MainMenu extends Component {
             ?
             [
               <Grid
+                key="notifications"
+                item
+              >
+                <Notifications
+                  key={userId}
+                  user={user}
+                  classes={{
+                    icon: classes.link,
+                  }}
+                />
+              </Grid>,
+              <Grid
                 key="user"
                 item
               >
                 <UserItem
                   key={userId}
                   user={user}
+                  classes={classes}
                 />
               </Grid>,
               <Grid
@@ -202,6 +203,7 @@ export class MainMenu extends Component {
               >
                 <Button
                   onClick={() => this.logout()}
+                  className={classes.link}
                 >
                   Signout
               </Button>
@@ -226,6 +228,7 @@ export class MainMenu extends Component {
               >
                 <Typography
                   component="span"
+                  className={classes.link}
                 >
                   Signin
               </Typography>

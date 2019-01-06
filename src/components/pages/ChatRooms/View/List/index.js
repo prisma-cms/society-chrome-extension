@@ -8,6 +8,8 @@ import {
 
 import { withStyles } from 'material-ui/styles';
 
+import PublicIcon from "material-ui-icons/Public";
+
 
 class ChatRoomsListView extends TableView {
 
@@ -31,6 +33,16 @@ class ChatRoomsListView extends TableView {
       //   id: "id",
       // },
       {
+        id: "isPublic",
+        label: "",
+        renderer: (value, record) => {
+
+          return <PublicIcon
+            color={value === true ? "primary" : "disabled"}
+          />;
+        },
+      },
+      {
         id: "name",
         label: "Название комнаты",
         renderer: (value, record) => {
@@ -39,6 +51,10 @@ class ChatRoomsListView extends TableView {
             object={record}
           /> : null;
         },
+      },
+      {
+        id: "code",
+        label: "Уникальный код",
       },
       {
         id: "CreatedBy",

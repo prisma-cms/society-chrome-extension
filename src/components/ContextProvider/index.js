@@ -66,6 +66,7 @@ class ContextProvider extends Component {
     return {
       ...this.prepareChatRoomQuery(),
       ...this.prepareChatMessageQuery(),
+      ...this.prepareNoticeQuery(),
     }
 
   }
@@ -393,6 +394,190 @@ class ContextProvider extends Component {
       chatMessage,
       createChatMessageProcessor,
       updateChatMessageProcessor,
+    }
+  }
+
+
+  prepareNoticeQuery() {
+    const {
+      queryFragments,
+    } = this.context;
+
+
+    const {
+      ChatRoomNoNestingFragment,
+      ChatMessageNoNestingFragment,
+      NoticeNoNestingFragment,
+      UserNoNestingFragment,
+    } = queryFragments;
+
+
+    const noticeFragment = `
+      fragment notice on Notice {
+        ...NoticeNoNesting
+        ChatMessage{
+          ...ChatMessageNoNesting
+          CreatedBy{
+            ...UserNoNesting
+          }
+          Room{
+            ...ChatRoomNoNesting
+          }
+        }
+      }
+
+      ${NoticeNoNestingFragment}
+      ${ChatMessageNoNestingFragment}
+      ${UserNoNestingFragment}
+      ${ChatRoomNoNestingFragment}
+    `;
+
+
+    const noticesConnection = `
+      query noticesConnection (
+        $where: NoticeWhereInput
+        $orderBy: NoticeOrderByInput
+        $skip: Int
+        $after: String
+        $before: String
+        $first: Int
+        $last: Int
+      ){
+        objectsConnection: noticesConnection (
+          where: $where
+          orderBy: $orderBy
+          skip: $skip
+          after: $after
+          before: $before
+          first: $first
+          last: $last
+        ){
+          aggregate{
+            count
+          }
+          edges{
+            node{
+              ...notice
+            }
+          }
+        }
+      }
+
+      ${noticeFragment}
+    `;
+
+
+    const notices = `
+      query notices (
+        $where: NoticeWhereInput
+        $orderBy: NoticeOrderByInput
+        $skip: Int
+        $after: String
+        $before: String
+        $first: Int
+        $last: Int
+      ){
+        objects: notices (
+          where: $where
+          orderBy: $orderBy
+          skip: $skip
+          after: $after
+          before: $before
+          first: $first
+          last: $last
+        ){
+          ...notice
+        }
+      }
+
+      ${noticeFragment}
+    `;
+
+
+    const notice = `
+      query notice (
+        $where: NoticeWhereUniqueInput!
+      ){
+        object: notice(
+          where: $where
+        ){
+          ...notice
+        }
+      }
+
+      ${noticeFragment}
+    `;
+
+
+    const createNoticeProcessor = `
+      mutation createNoticeProcessor(
+        $data: NoticeCreateInput!
+      ) {
+        response: createNoticeProcessor(
+          data: $data
+        ){
+          success
+          message
+          errors{
+            key
+            message
+          }
+          data{
+            ...notice
+          }
+        }
+      }
+
+      ${noticeFragment}
+    `;
+
+
+    const updateNoticeProcessor = `
+      mutation updateNoticeProcessor(
+        $data: NoticeUpdateInput!
+        $where: NoticeWhereUniqueInput!
+      ) {
+        response: updateNoticeProcessor(
+          data: $data
+          where: $where
+        ){
+          success
+          message
+          errors{
+            key
+            message
+          }
+          data{
+            ...notice
+          }
+        }
+      }
+
+      ${noticeFragment}
+    `;
+
+
+    const deleteNotice = `
+      mutation deleteNotice (
+        $where: NoticeWhereUniqueInput!
+      ){
+        deleteNotice(
+          where: $where
+        ){
+          ...NoticeNoNesting
+        }
+      }
+      ${NoticeNoNestingFragment}
+    `;
+
+
+    return {
+      noticesConnection,
+      notices,
+      notice,
+      createNoticeProcessor,
+      updateNoticeProcessor,
+      deleteNotice,
     }
   }
 

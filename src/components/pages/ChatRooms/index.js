@@ -73,6 +73,14 @@ class ChatRoomsPage extends ListPage {
       }}
       {...this.getPaginationParams()}
       {...other}
+      addObject={() => {
+        const {
+          router: {
+            history,
+          },
+        } = this.context;
+        history.push("/chat-rooms/create");
+      }}
     />
   }
 }

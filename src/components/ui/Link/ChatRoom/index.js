@@ -4,10 +4,10 @@ import Typography from "material-ui/Typography";
 
 
 import Context from "@prisma-cms/context";
- 
+
 export class ChatRoomLink extends Component {
 
-  
+
   static contextType = Context;
 
   render() {
@@ -27,11 +27,12 @@ export class ChatRoomLink extends Component {
       Link,
     } = this.context;
 
-    const {
+    let {
       id,
       name,
     } = object;
 
+    name = name || id;
 
     if (!name || !id) {
       return null;

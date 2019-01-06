@@ -60,14 +60,14 @@ export class TableView extends TableViewProto {
 
   componentDidMount() {
 
-    console.log("TableView componentDidMount");
+    // console.log("TableView componentDidMount");
 
     Events.scrollEvent.register('begin', function (to, element) {
-      console.log("begin", arguments);
+      // console.log("begin", arguments);
     });
 
     Events.scrollEvent.register('end', function (to, element) {
-      console.log("end", arguments);
+      // console.log("end", arguments);
     });
 
     // scrollSpy.unmount(window.document);
@@ -141,7 +141,7 @@ export class TableView extends TableViewProto {
   }
 
   handleSetActive(to) {
-    console.log("handleSetActive", to);
+    // console.log("handleSetActive", to);
   }
 
   getScrollContainer = () => {
@@ -216,7 +216,6 @@ export class TableView extends TableViewProto {
       return <Element
         key={n.id}
         name={n.id}
-        className="element"
       >
         <ChatMessage
           data={{
