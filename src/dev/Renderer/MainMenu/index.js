@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import Context from '@prisma-cms/context';
+
 import Grid from '@prisma-cms/front/lib/modules/ui/Grid';
 
 import AppBar from 'material-ui/AppBar';
@@ -11,7 +13,7 @@ import Typography from 'material-ui/Typography';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from 'material-ui/styles';
-import { Context, Notifications } from '../../../App';
+import { Notifications } from '../../../App';
 
 // import Modal from './AuthModal';
 

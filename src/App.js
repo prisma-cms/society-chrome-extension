@@ -19,7 +19,6 @@ import ChatMessage from "./components/pages/ChatMessages/ChatMessage";
 
 
 export {
-  Context,
   ContextProvider,
   SubscriptionProvider,
 

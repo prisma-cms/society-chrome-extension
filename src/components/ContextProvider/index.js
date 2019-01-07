@@ -4,9 +4,7 @@ import React, {
 } from 'react';
 
 
-import {
-  Context,
-} from "../../App";
+import Context from '@prisma-cms/context';
 
 import * as UI from "../ui";
 
