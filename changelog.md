@@ -1,3 +1,7 @@
+1.4.7
+=================================
+- Fix Notices
+
 1.4.6
 =================================
 - Fix scroll messages on componentDidMount

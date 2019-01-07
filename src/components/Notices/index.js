@@ -10,7 +10,7 @@ import PrismaCmsComponent from "@prisma-cms/component";
 import View from "./View";
 
 
-class Notifications extends PrismaCmsComponent {
+class Notices extends PrismaCmsComponent {
 
 
   static propTypes = {
@@ -76,4 +76,4 @@ class Notifications extends PrismaCmsComponent {
 }
 
 
-export default Notifications; 
+export default Notices; 

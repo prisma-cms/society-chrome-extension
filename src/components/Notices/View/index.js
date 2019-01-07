@@ -62,12 +62,42 @@ const styles = theme => {
   };
 };
 
-class MenuListComposition extends PrismaCmsComponent {
+class NoticesList extends PrismaCmsComponent {
 
   state = {
     ...super.state,
     open: false,
   };
+
+  static propTypes = {
+    ...PrismaCmsComponent.propTypes,
+    classes: PropTypes.object.isRequired,
+  };
+
+
+  componentDidUpdate(prevProps, prevState) {
+
+    const {
+      data: {
+        objectsConnection,
+      },
+    } = this.props;
+
+
+    const {
+      open,
+    } = this.state;
+
+    const objects = objectsConnection && objectsConnection.edges.map(({ node }) => node) || [];
+
+    if (open && !objects.length) {
+      this.setState({ open: false });
+    }
+
+    super.componentDidUpdate && super.componentDidUpdate();
+
+  }
+
 
   handleToggle = () => {
 
@@ -266,8 +296,5 @@ class MenuListComposition extends PrismaCmsComponent {
   }
 }
 
-MenuListComposition.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default withStyles(styles)(MenuListComposition);
+export default withStyles(styles)(NoticesList);

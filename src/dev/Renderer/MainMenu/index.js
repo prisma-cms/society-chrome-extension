@@ -13,7 +13,7 @@ import Typography from 'material-ui/Typography';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from 'material-ui/styles';
-import { Notifications } from '../../../App';
+import { Notices } from '../../../App';
 
 // import Modal from './AuthModal';
 
@@ -181,7 +181,7 @@ export class MainMenu extends Component {
                 key="notifications"
                 item
               >
-                <Notifications
+                <Notices
                   key={userId}
                   user={user}
                   classes={{
