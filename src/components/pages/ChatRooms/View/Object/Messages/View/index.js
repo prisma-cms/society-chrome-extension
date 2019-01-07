@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 
-// import gql from 'graphql-tag';
-
 import {
   styles as defaultStyles,
   // styles,
