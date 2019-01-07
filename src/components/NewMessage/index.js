@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import PrismaCmsComponent from "@prisma-cms/component";
 
 
-import ChatMessage from "../../../../ChatMessages/View/Object/";
+import ChatMessage from "../pages/ChatMessages/View/Object/";
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -13,7 +13,7 @@ class NewMessage extends PrismaCmsComponent {
 
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
-    Room: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
   }
 
 
@@ -48,26 +48,14 @@ class NewMessage extends PrismaCmsComponent {
 
 
     const {
-      Room,
+      data,
+      onSave,
     } = this.props;
 
 
     const {
       messageKey,
     } = this.state;
-
-    if (!Room) {
-      return null;
-    }
-
-    const {
-      id: roomId,
-    } = Room;
-
-
-    if (!roomId) {
-      return null;
-    }
 
     return (
       <ChatMessage
@@ -84,7 +72,7 @@ class NewMessage extends PrismaCmsComponent {
           // console.log("variables", variables);
 
           let {
-            data,
+            data: variablesData,
             ...other
           } = variables || {};
 
@@ -93,19 +81,22 @@ class NewMessage extends PrismaCmsComponent {
             variables: {
               data: {
                 ...data,
-                Room: {
-                  connect: {
-                    id: roomId,
-                  },
-                },
+                ...variablesData,
               },
               ...other,
             },
-          });
+          })
         }}
-        onSave={result => this.setState({
-          messageKey: new Date(),
-        })}
+        onSave={async result => {
+
+          this.setState({
+            messageKey: new Date(),
+          });
+
+          console.log("onSave", onSave, result);
+
+          return onSave ? await onSave(result) : result;
+        }}
       />
     );
   }

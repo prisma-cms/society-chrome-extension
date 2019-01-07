@@ -9,6 +9,7 @@ import SubscriptionProvider from "./components/SubscriptionProvider";
 import ContextProvider from "./components/ContextProvider";
 
 import Notices from "./components/Notices";
+import NewMessage from "./components/NewMessage";
 
 import ChatRooms from "./components/pages/ChatRooms";
 import ChatRoom from "./components/pages/ChatRooms/ChatRoom";
@@ -23,6 +24,7 @@ export {
   SubscriptionProvider,
 
   Notices,
+  NewMessage,
 
   ChatRooms,
   ChatRoom,

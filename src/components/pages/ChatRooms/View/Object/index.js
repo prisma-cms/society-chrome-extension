@@ -7,10 +7,11 @@ import { withStyles, IconButton } from 'material-ui';
 
 import MembersList from "./Members";
 import MessagesList from "./Messages";
-import NewMessage from "./NewMessage";
 
 import PublicIcon from "material-ui-icons/Public";
 import { Typography } from 'material-ui';
+import { NewMessage } from '../../../../../App';
+
 
 const styles = theme => {
 
@@ -241,7 +242,13 @@ class ChatRoomView extends EditableView {
       />
 
       editor = <NewMessage
-        Room={object}
+        data={{
+          Room: {
+            connect: {
+              id: objectId,
+            },
+          },
+        }}
       />
 
     }
