@@ -50,6 +50,7 @@ class NewMessage extends PrismaCmsComponent {
     const {
       data,
       onSave,
+      ...other
     } = this.props;
 
 
@@ -93,10 +94,11 @@ class NewMessage extends PrismaCmsComponent {
             messageKey: new Date(),
           });
 
-          console.log("onSave", onSave, result);
+          // console.log("onSave", onSave, result);
 
           return onSave ? await onSave(result) : result;
         }}
+        {...other}
       />
     );
   }
