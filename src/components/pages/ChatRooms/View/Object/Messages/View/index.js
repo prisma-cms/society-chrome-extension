@@ -77,16 +77,9 @@ export class TableView extends TableViewProto {
     // scrollSpy.mount(this.getScrollContainer());
     scrollSpy.update();
 
-    // console.log("scrollSpy", scrollSpy);
-    // setTimeout(() => {
-
-    //   // scroll.scrollToBottom({
-    //   //   container: this.getScrollContainer(),
-    //   // });
-
-    //   this.scrollToBottom();
-    // }, 3000);
-    // this.scrollToBottom();
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 300)
 
     super.componentDidMount && super.componentDidMount();
   }

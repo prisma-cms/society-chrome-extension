@@ -1,3 +1,7 @@
+1.4.6
+=================================
+- Fix scroll messages on componentDidMount
+
 1.4.5
 =================================
 - Fix gql
