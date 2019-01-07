@@ -53,6 +53,10 @@ export const styles = theme => {
 export class TableView extends TableViewProto {
 
 
+  // static propTypes = {
+  //   ...TableViewProto.propTypes,
+  // }
+
   static defaultProps = {
     ...TableViewProto.defaultProps,
     title: "",
@@ -157,6 +161,7 @@ export class TableView extends TableViewProto {
         objectsConnection,
       },
       classes,
+      // updateChatMessageProcessor,
     } = this.props;
 
     const {
@@ -221,7 +226,12 @@ export class TableView extends TableViewProto {
           data={{
             object: n,
           }}
-          mutate={async () => { }}
+          mutate={(props) => {
+            return this.mutate({
+              mutation: gql(updateChatMessageProcessor),
+              ...props,
+            });
+          }}
         />
       </Element>
     }) || [];

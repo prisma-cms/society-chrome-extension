@@ -47,12 +47,20 @@ class ChatRoom extends ObjectPage {
         query: {
           chatRoom,
           updateChatRoomProcessor,
+          createChatMessageProcessor,
+          updateChatMessageProcessor,
         },
       } = this.context;
 
       this.Renderer = compose(
         graphql(gql(chatRoom)),
         graphql(gql(updateChatRoomProcessor)),
+        graphql(gql(createChatMessageProcessor), {
+          name: "createChatMessageProcessor",
+        }),
+        graphql(gql(updateChatMessageProcessor), {
+          name: "updateChatMessageProcessor",
+        }),
       )(View);
 
     }
