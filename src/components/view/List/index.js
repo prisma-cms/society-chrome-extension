@@ -13,7 +13,7 @@ class TableView extends TableViewProto {
 
 
   static defaultProps = {
-    ...TableView.defaultProps,
+    ...TableViewProto.defaultProps,
     columnData: [],
   };
 
