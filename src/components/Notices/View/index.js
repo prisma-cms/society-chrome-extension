@@ -13,7 +13,7 @@ import { withStyles } from 'material-ui/styles';
 
 import NotificationsIcon from "material-ui-icons/Notifications";
 import NotificationsActiveIcon from "material-ui-icons/NotificationsActive";
-import { IconButton, ListItem } from 'material-ui';
+import { IconButton, ListItem, CircularProgress } from 'material-ui';
 // import { ListItemAvatar } from 'material-ui';
 import { ListItemText } from 'material-ui';
 import { ListItemSecondaryAction } from 'material-ui';
@@ -72,6 +72,7 @@ class NoticesList extends PrismaCmsComponent {
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
     classes: PropTypes.object.isRequired,
+    deleteManyNotices: PropTypes.func.isRequired,
   };
 
 
@@ -118,26 +119,6 @@ class NoticesList extends PrismaCmsComponent {
   };
 
 
-  deleteNotice(variables) {
-
-    const {
-      deleteNotice,
-    } = this.props;
-
-    // this.mutate({
-    //   mutation: deleteNotice,
-    //   ...props,
-    // });
-
-    deleteNotice({
-      // variables: {
-      //   ...variables,
-      // },
-      variables,
-    });
-  }
-
-
   renderItems(objects) {
 
     const {
@@ -146,7 +127,15 @@ class NoticesList extends PrismaCmsComponent {
 
     const {
       classes,
+      deleteManyNotices,
+      data: {
+        refetch,
+      },
     } = this.props;
+
+    const {
+      inRequest,
+    } = this.state;
 
     return objects.map(n => {
 
@@ -169,6 +158,7 @@ class NoticesList extends PrismaCmsComponent {
             } = n;
 
             const {
+              // id: messageId,
               contentText,
               Room,
             } = ChatMessage || {};
@@ -194,21 +184,38 @@ class NoticesList extends PrismaCmsComponent {
               />
 
               <ListItemSecondaryAction>
-                <IconButton
-                  aria-label="Delete"
-                  onClick={event => {
-                    event.preventDefault();
-                    event.stopPropagation();
+                {inRequest && inRequest === noticeId ?
+                  <CircularProgress />
+                  :
+                  <IconButton
+                    aria-label="Delete"
+                    onClick={async event => {
+                      event.preventDefault();
+                      event.stopPropagation();
 
-                    this.deleteNotice({
-                      where: {
-                        id: noticeId,
-                      },
-                    });
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
+                      this.setState({
+                        inRequest: noticeId,
+                      });
+
+                      await deleteManyNotices({
+                        variables: {
+                          where: {
+                            id: noticeId,
+                          },
+                        },
+                      })
+                        .then(refetch)
+                        .catch(console.error);
+
+                      this.setState({
+                        inRequest: null,
+                      });
+
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
               </ListItemSecondaryAction>
             </ListItem>;
           }
@@ -297,4 +304,4 @@ class NoticesList extends PrismaCmsComponent {
 }
 
 
-export default withStyles(styles)(NoticesList);
+export default withStyles(styles)(props => <NoticesList {...props} />);

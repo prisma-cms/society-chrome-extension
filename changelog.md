@@ -1,3 +1,8 @@
+1.4.10
+=================================
+- Added markAsReadedChatMessage
+- Added deleteManyNotices
+
 1.4.9
 =================================
 - Fix NewMessage styles

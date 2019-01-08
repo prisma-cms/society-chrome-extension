@@ -242,23 +242,31 @@ class ContextProvider extends Component {
       ChatRoomNoNestingFragment,
       ChatMessageNoNestingFragment,
       UserNoNestingFragment,
+      ChatMessageReadedNoNestingFragment,
     } = queryFragments;
 
 
     const chatMessageFragment = `
       fragment chatMessage on ChatMessage {
         ...ChatMessageNoNesting
+        Room{
+          ...ChatRoomNoNesting
+        }
         CreatedBy{
           ...UserNoNesting
         }
-        Room{
-          ...ChatRoomNoNesting
+        ReadedBy{
+          ...ChatMessageReadedNoNesting
+          User{
+            ...UserNoNesting
+          }
         }
       }
 
       ${ChatMessageNoNestingFragment}
       ${UserNoNestingFragment}
       ${ChatRoomNoNestingFragment}
+      ${ChatMessageReadedNoNestingFragment}
     `;
 
 
@@ -386,12 +394,24 @@ class ContextProvider extends Component {
     `;
 
 
+    const markAsReadedChatMessage = `
+      mutation markAsReadedChatMessage(
+        $where: ChatMessageWhereUniqueInput!
+      ){
+        markAsReadedChatMessage(
+          where: $where
+        )
+      }
+    `;
+
+
     return {
       chatMessagesConnection,
       chatMessages,
       chatMessage,
       createChatMessageProcessor,
       updateChatMessageProcessor,
+      markAsReadedChatMessage,
     }
   }
 
@@ -407,6 +427,7 @@ class ContextProvider extends Component {
       ChatMessageNoNestingFragment,
       NoticeNoNestingFragment,
       UserNoNestingFragment,
+      BatchPayloadNoNestingFragment,
     } = queryFragments;
 
 
@@ -569,6 +590,20 @@ class ContextProvider extends Component {
     `;
 
 
+    const deleteManyNotices = `
+      mutation deleteManyNotices (
+        $where: NoticeWhereInput
+      ){
+        deleteManyNotices(
+          where: $where
+        ){
+          ...BatchPayloadNoNesting
+        }
+      }
+      ${BatchPayloadNoNestingFragment}
+    `;
+
+
     return {
       noticesConnection,
       notices,
@@ -576,6 +611,7 @@ class ContextProvider extends Component {
       createNoticeProcessor,
       updateNoticeProcessor,
       deleteNotice,
+      deleteManyNotices,
     }
   }
 

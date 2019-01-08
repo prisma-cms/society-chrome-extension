@@ -8,6 +8,7 @@ import { withStyles, IconButton, CircularProgress, Paper } from 'material-ui';
 import SendIcon from "material-ui-icons/Send";
 import moment from "moment";
 import { Typography } from 'material-ui';
+import gql from 'graphql-tag';
 
 const styles = theme => {
 
@@ -212,6 +213,58 @@ class ChatMessageView extends EditableView {
 
     return this.renderDefaultView();
   }
+
+
+  componentDidMount() {
+
+    /**
+     * Когда сообщение загружено, 
+     * надо его отметить прочитанным
+     */
+
+    const {
+      user: currentUser,
+      query: {
+        markAsReadedChatMessage,
+      },
+      client,
+    } = this.context;
+
+    const {
+      id: currentUserId,
+    } = currentUser || {};
+
+    if (currentUserId) {
+
+      const {
+        data: {
+          object,
+        },
+      } = this.props;
+
+
+      const {
+        id,
+        ReadedBy,
+      } = object || {};
+
+      if (id && ReadedBy && ReadedBy.findIndex(n => n.User.id === currentUserId) === -1) {
+
+        client.mutate({
+          mutation: gql(markAsReadedChatMessage),
+          variables: {
+            where: {
+              id,
+            },
+          },
+        });
+      }
+
+    }
+
+    super.componentDidMount && super.componentDidMount();
+  }
+
 
   render() {
 

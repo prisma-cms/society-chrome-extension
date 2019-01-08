@@ -137,7 +137,7 @@ export class TableView extends TableViewProto {
   }
 
   handleSetActive(to) {
-    // console.log("handleSetActive", to);
+    console.log("handleSetActive", to);
   }
 
   getScrollContainer = () => {

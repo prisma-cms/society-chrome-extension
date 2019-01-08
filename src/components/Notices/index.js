@@ -31,7 +31,7 @@ class Notices extends PrismaCmsComponent {
     const {
       query: {
         noticesConnection,
-        deleteNotice,
+        deleteManyNotices,
       },
     } = this.context;
 
@@ -41,8 +41,8 @@ class Notices extends PrismaCmsComponent {
 
     this.Renderer = compose(
       graphql(gql(noticesConnection)),
-      graphql(gql(deleteNotice), {
-        name: "deleteNotice",
+      graphql(gql(deleteManyNotices), {
+        name: "deleteManyNotices",
       }),
     )(View);
 
