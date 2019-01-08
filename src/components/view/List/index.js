@@ -23,6 +23,33 @@ class TableView extends TableViewProto {
     return super.render();
   }
 
+
+  componentDidMount() {
+
+    const {
+      data,
+    } = this.props;
+
+
+    const {
+      loading,
+      refetch,
+    } = data || {}
+
+    // console.log("componentDidMount loading", loading);
+
+    /**
+     * Если при монтировании загрузка не выполняется,
+     * это значит, документ из кеша взять. Надо перезагрузить данные
+     */
+    if (loading === false && refetch) {
+      refetch();
+    }
+
+    super.componentDidMount && super.componentDidMount();
+  }
+  
+
   render() {
 
     const {

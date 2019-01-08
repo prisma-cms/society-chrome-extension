@@ -43,15 +43,40 @@ class EditableObject extends EditableView {
       },
     } = this.props;
 
-    
+
     if (setPageMeta) {
-      
+
       setPageMeta(object);
 
     }
 
   }
 
+
+  componentDidMount() {
+
+    const {
+      data,
+    } = this.props;
+
+
+    const {
+      loading,
+      refetch,
+    } = data || {}
+
+    // console.log("componentDidMount loading", loading);
+
+    /**
+     * Если при монтировании загрузка не выполняется,
+     * это значит, документ из кеша взять. Надо перезагрузить данные
+     */
+    if (loading === false && refetch) {
+      refetch();
+    }
+
+    super.componentDidMount && super.componentDidMount();
+  }
 
   componentDidUpdate(prevProps, prevState) {
 

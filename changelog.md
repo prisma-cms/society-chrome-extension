@@ -1,3 +1,7 @@
+1.4.11
+=================================
+- Added refetch pages
+
 1.4.10
 =================================
 - Added markAsReadedChatMessage
