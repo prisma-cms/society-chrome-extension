@@ -6,6 +6,7 @@ import EditableView from "../../../../view/Object/Editable";
 import { withStyles, IconButton } from 'material-ui';
 
 import ExitIcon from "material-ui-icons/ExitToApp";
+import JoinIcon from "material-ui-icons/GroupAdd";
 
 // import MembersList from "./Members";
 import MessagesList from "./Messages";
@@ -176,45 +177,104 @@ class ChatRoomView extends EditableView {
     </Grid>);
 
 
-    if (Members && Members.find(n => n.id === currentUserId) && createdById !== currentUserId) {
+    if (objectId) {
+
+      if (Members && Members.find(n => n.id === currentUserId)) {
+
+        if (createdById !== currentUserId) {
+
+          membersList.push(<Grid
+            key="Exit"
+            item
+          >
+            <IconButton
+              title="Покинуть чат"
+              onClick={async event => {
+
+                const {
+                  query: {
+                    leaveChatRoom,
+                  },
+                  client,
+                } = this.context;
+
+                await client.mutate({
+                  mutation: gql(leaveChatRoom),
+                  variables: {
+                    where: {
+                      id: objectId,
+                    },
+                  },
+                })
+                  .then(r => {
+
+                  })
+                  .catch(console.error);
+
+              }}
+            >
+              <ExitIcon
+
+              />
+            </IconButton>
+          </Grid>);
+
+        }
+
+      }
+      else {
+
+        if (currentUserId) {
+
+          const Invitation = Invitations && Invitations.find(n => n.User.id === currentUserId) || null;
+
+          if (Invitation || isPublic) {
 
 
-      membersList.push(<Grid
-        key="Exit"
-        item
-      >
-        <IconButton
-          onClick={async event => {
+            membersList.push(<Grid
+              key="Join"
+              item
+            >
+              <IconButton
+                title="Вступить в чат"
+                onClick={async event => {
 
-            const {
-              query: {
-                leaveChatRoom,
-              },
-              client,
-            } = this.context;
+                  const {
+                    query: {
+                      joinChatRoom,
+                    },
+                    client,
+                  } = this.context;
 
-            await client.mutate({
-              mutation: gql(leaveChatRoom),
-              variables: {
-                where: {
-                  id: objectId,
-                },
-              },
-            })
-              .then(r => {
+                  await client.mutate({
+                    mutation: gql(joinChatRoom),
+                    variables: {
+                      where: {
+                        id: objectId,
+                      },
+                    },
+                  })
+                    .then(r => {
 
-              })
-              .catch(console.error);
+                    })
+                    .catch(console.error);
 
-          }}
-        >
-          <ExitIcon
+                }}
+              >
+                <JoinIcon
 
-          />
-        </IconButton>
-      </Grid>);
+                />
+              </IconButton>
+            </Grid>);
+          }
+        }
+
+      }
 
     }
+
+
+
 
     return <Grid
       container

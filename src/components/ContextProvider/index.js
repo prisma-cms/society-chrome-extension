@@ -256,6 +256,20 @@ class ContextProvider extends Component {
       ${chatRoomFragment}
     `;
 
+
+    const joinChatRoom = `
+      mutation joinChatRoom(
+        $where: ChatRoomWhereUniqueInput!
+      ){
+        joinChatRoom (
+          where: $where
+        ){
+          ...chatRoom
+        }
+      }
+      ${chatRoomFragment}
+    `;
+
     return {
       chatRoomsConnection,
       chatRooms,
@@ -264,6 +278,7 @@ class ContextProvider extends Component {
       updateChatRoomProcessor,
       inviteChatRoomProcessor,
       leaveChatRoom,
+      joinChatRoom,
     }
   }
 

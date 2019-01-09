@@ -1,3 +1,7 @@
+1.4.13
+=================================
+- Added joinChatRoom
+
 1.4.12
 =================================
 - Added inviteChatRoomProcessor

@@ -89,7 +89,7 @@ class ChatRoomAddMember extends Component {
             where={{
               id_not_in: exclude,
             }}
-            value={value}
+            value={value || ""}
             // value="cjqbpqrrw4mrc0860wyktotnn"
             onDelete={value ? (event) => {
               this.setState({
@@ -132,7 +132,7 @@ class ChatRoomAddMember extends Component {
 
             } : undefined}
             onSelect={(value, item) => {
-              // console.log("onSelect", value, item);
+              console.log("onSelect", value, item);
               const {
                 id,
               } = item;
@@ -147,6 +147,7 @@ class ChatRoomAddMember extends Component {
     }
     else {
       content = <IconButton
+        title="Пригласить пользователя"
         onClick={() => this.setState({
           opened: true,
         })}
