@@ -1,3 +1,7 @@
+1.4.14
+=================================
+- Added ChatMessage link in list
+
 1.4.13
 =================================
 - Added joinChatRoom

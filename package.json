@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/society",
-  "version": "1.4.13",
+  "version": "1.4.14",
   "private": false,
   "main": "lib/App.js",
   "scripts": {

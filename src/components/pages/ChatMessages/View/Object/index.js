@@ -6,6 +6,7 @@ import EditableView from "../../../../view/Object/Editable";
 import { withStyles, IconButton, CircularProgress, Paper } from 'material-ui';
 
 import SendIcon from "material-ui-icons/Send";
+import LinkIcon from "material-ui-icons/Link";
 import moment from "moment";
 import { Typography } from 'material-ui';
 import gql from 'graphql-tag';
@@ -85,6 +86,7 @@ class ChatMessageView extends EditableView {
       Editor,
       UserLink,
       ChatRoomLink,
+      ChatMessageLink,
     } = this.context;
 
     const {
@@ -95,6 +97,8 @@ class ChatMessageView extends EditableView {
     } = this.state;
 
 
+    const object = this.getObjectWithMutations();
+
     const {
       id: objectId,
       content,
@@ -102,7 +106,7 @@ class ChatMessageView extends EditableView {
       updatedAt,
       Room,
       CreatedBy,
-    } = this.getObjectWithMutations();
+    } = object;
 
 
     const inEditMode = this.isInEditMode();
@@ -159,11 +163,17 @@ class ChatMessageView extends EditableView {
                 <Grid
                   item
                 >
-                  <Typography
-                    color="textSecondary"
+
+                  <ChatMessageLink
+                    object={object}
                   >
-                    {createdAt && moment(createdAt).format("lll") || null}
-                  </Typography>
+                    <Typography
+                      color="textSecondary"
+                    >
+                      {createdAt && moment(createdAt).format("lll") || null}
+                    </Typography>
+                  </ChatMessageLink>
+
                 </Grid>
                 <Grid
                   item
