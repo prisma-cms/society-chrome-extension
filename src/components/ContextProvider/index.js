@@ -79,6 +79,7 @@ class ContextProvider extends Component {
     const {
       ChatRoomNoNestingFragment,
       UserNoNestingFragment,
+      ChatRoomInvitationNoNestingFragment,
     } = queryFragments;
 
 
@@ -91,10 +92,17 @@ class ContextProvider extends Component {
         Members{
           ...UserNoNesting
         }
+        Invitations{
+          ...ChatRoomInvitationNoNesting
+          User{
+            ...UserNoNesting
+          }
+        }
       }
 
       ${ChatRoomNoNestingFragment}
       ${UserNoNestingFragment}
+      ${ChatRoomInvitationNoNestingFragment}
     `;
 
 
@@ -222,12 +230,40 @@ class ContextProvider extends Component {
     `;
 
 
+    const inviteChatRoomProcessor = `
+      mutation inviteChatRoomProcessor(
+        $data: ChatRoomInviteInput!
+        $where: ChatRoomWhereUniqueInput!
+      ){
+        inviteChatRoomProcessor(
+          data: $data
+          where: $where
+        ) 
+      }
+    `;
+
+
+    const leaveChatRoom = `
+      mutation leaveChatRoom(
+        $where: ChatRoomWhereUniqueInput!
+      ){
+        leaveChatRoom(
+          where: $where
+        ){
+          ...chatRoom
+        }
+      }
+      ${chatRoomFragment}
+    `;
+
     return {
       chatRoomsConnection,
       chatRooms,
       chatRoom,
       createChatRoomProcessor,
       updateChatRoomProcessor,
+      inviteChatRoomProcessor,
+      leaveChatRoom,
     }
   }
 
@@ -440,6 +476,16 @@ class ContextProvider extends Component {
             ...UserNoNesting
           }
           Room{
+            ...ChatRoomNoNesting
+          }
+        }
+        ChatRoomInvitation{
+          id
+          createdAt
+          CreatedBy{
+            ...UserNoNesting
+          }
+          ChatRoom{
             ...ChatRoomNoNesting
           }
         }

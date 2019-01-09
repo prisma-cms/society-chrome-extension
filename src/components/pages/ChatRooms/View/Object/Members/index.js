@@ -7,7 +7,7 @@ import Context from "@prisma-cms/context";
 class ChatRoomMembers extends Component {
 
   static propTypes = {
-    Members: PropTypes.array.isRequired,
+    object: PropTypes.object.isRequired,
   }
 
   static contextType = Context;
@@ -17,11 +17,19 @@ class ChatRoomMembers extends Component {
     const {
       Grid,
       UserLink,
+      user: currentUser,
     } = this.context;
 
     const {
-      Members,
+      object: {
+        Members,
+        CreatedBy,
+      },
     } = this.props;
+
+    const {
+      id: createdById,
+    } = CreatedBy;
 
     return (
       <div>
@@ -47,7 +55,7 @@ class ChatRoomMembers extends Component {
           })}
 
         </Grid>
-        
+
       </div>
     );
   }

@@ -94,6 +94,34 @@ class ChatRoomsListView extends TableView {
           </Grid> : null;
         },
       },
+      {
+        id: "Invitations",
+        label: "Приглашенные",
+        renderer: (value) => {
+
+          return value && value.length ? <Grid
+            container
+            spacing={8}
+          >
+            {value.map(n => {
+              const {
+                User,
+              } = n;
+
+              return <Grid
+                key={User.id}
+                item
+              >
+                <UserLink
+                  user={User}
+                  showName={false}
+                  size="small"
+                />
+              </Grid>
+            })}
+          </Grid> : null;
+        },
+      },
     ]
 
   }

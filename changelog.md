@@ -1,3 +1,8 @@
+1.4.12
+=================================
+- Added inviteChatRoomProcessor
+- Added leaveChatRoom
+
 1.4.11
 =================================
 - Added refetch pages

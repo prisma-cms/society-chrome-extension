@@ -5,10 +5,16 @@ import EditableView from "../../../../view/Object/Editable";
 
 import { withStyles, IconButton } from 'material-ui';
 
-import MembersList from "./Members";
+import ExitIcon from "material-ui-icons/ExitToApp";
+
+// import MembersList from "./Members";
 import MessagesList from "./Messages";
+import AddMember from "./AddMember";
 
 import PublicIcon from "material-ui-icons/Public";
+
+import gql from 'graphql-tag';
+
 import { Typography } from 'material-ui';
 import { NewMessage } from '../../../../../App';
 
@@ -78,6 +84,7 @@ class ChatRoomView extends EditableView {
     const {
       Grid,
       UserLink,
+      user: currentUser,
     } = this.context;
 
     const {
@@ -90,10 +97,22 @@ class ChatRoomView extends EditableView {
 
 
     const {
+      id: objectId,
       isPublic,
       Members,
       code,
+      Invitations,
+      CreatedBy,
     } = object;
+
+
+    const {
+      id: currentUserId,
+    } = currentUser || {};
+
+    const {
+      id: createdById,
+    } = CreatedBy || {};
 
 
     let publicButton = <PublicIcon
@@ -114,21 +133,87 @@ class ChatRoomView extends EditableView {
     }
 
 
-    let membersList;
+    let membersList = [];
 
+    let members = [];
+
+    // Invitations.map(n => n.User.id).concat(Members)
+
+    if (Invitations && Invitations.length) {
+      members = members.concat(Invitations.map(n => n.User));
+    }
 
     if (Members && Members.length) {
-      const members = Members.slice(0, 5);
+      members = members.concat(Members);
+    }
+
+    members = members.slice(0, 5);
+
+    if (Members && Members.length) {
       membersList = members.map(n => {
 
-        return <UserLink
+        return <Grid
           key={n.id}
-          user={n}
-          showName={false}
-          size="small"
-        />
+          item
+        >
+          <UserLink
+            user={n}
+            showName={false}
+            size="small"
+          />
+        </Grid>
 
       })
+    }
+
+    membersList.push(<Grid
+      key="AddMember"
+      item
+    >
+      <AddMember
+        ChatRoom={object}
+      />
+    </Grid>);
+
+
+    if (Members && Members.find(n => n.id === currentUserId) && createdById !== currentUserId) {
+
+
+      membersList.push(<Grid
+        key="Exit"
+        item
+      >
+        <IconButton
+          onClick={async event => {
+
+            const {
+              query: {
+                leaveChatRoom,
+              },
+              client,
+            } = this.context;
+
+            await client.mutate({
+              mutation: gql(leaveChatRoom),
+              variables: {
+                where: {
+                  id: objectId,
+                },
+              },
+            })
+              .then(r => {
+
+              })
+              .catch(console.error);
+
+          }}
+        >
+          <ExitIcon
+
+          />
+        </IconButton>
+      </Grid>);
+
     }
 
     return <Grid
@@ -181,7 +266,16 @@ class ChatRoomView extends EditableView {
           showName={false}
         /> */}
 
-        {membersList}
+        {membersList && membersList.length ?
+          <Grid
+            container
+            alignItems="center"
+            spacing={8}
+          >
+            {membersList}
+          </Grid>
+          : null
+        }
 
       </Grid>
 
@@ -222,15 +316,15 @@ class ChatRoomView extends EditableView {
       isPublic,
     } = object;
 
-    let members;
+    // let members;
     let messages;
     let editor;
 
     if (objectId) {
 
-      members = <MembersList
-        Members={Members}
-      />
+      // members = <MembersList
+      //   object={object}
+      // />
 
       messages = <MessagesList
         // Room={object}

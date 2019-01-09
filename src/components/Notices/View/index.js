@@ -123,6 +123,7 @@ class NoticesList extends PrismaCmsComponent {
 
     const {
       ChatRoomLink,
+      UserLink,
     } = this.context;
 
     const {
@@ -173,6 +174,86 @@ class NoticesList extends PrismaCmsComponent {
 
               <ListItemIcon>
                 <MessageIcon />
+              </ListItemIcon>
+
+              <ListItemText
+                primary={<ChatRoomLink
+                  object={Room}
+                />}
+                secondary={secondary}
+                className={classes.listItemText}
+              />
+
+              <ListItemSecondaryAction>
+                {inRequest && inRequest === noticeId ?
+                  <CircularProgress />
+                  :
+                  <IconButton
+                    aria-label="Delete"
+                    onClick={async event => {
+                      event.preventDefault();
+                      event.stopPropagation();
+
+                      this.setState({
+                        inRequest: noticeId,
+                      });
+
+                      await deleteManyNotices({
+                        variables: {
+                          where: {
+                            id: noticeId,
+                          },
+                        },
+                      })
+                        .then(refetch)
+                        .catch(console.error);
+
+                      this.setState({
+                        inRequest: null,
+                      });
+
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              </ListItemSecondaryAction>
+            </ListItem>;
+          }
+
+          break;
+
+        case "ChatRoomInvitation":
+          {
+            const {
+              ChatRoomInvitation,
+            } = n;
+
+            const {
+              // id: messageId,
+              contentText,
+              ChatRoom: Room,
+              CreatedBy,
+            } = ChatRoomInvitation || {};
+
+            let secondary = <ChatRoomLink
+              object={Room}
+            >
+              Вас пригласили в чат-комнату
+            </ChatRoomLink> || undefined;
+
+            item = <ListItem
+              key={noticeId}
+              onClick={this.handleClose}
+            // dense
+            >
+
+              <ListItemIcon>
+                <UserLink
+                  user={CreatedBy}
+                  size="small"
+                  showName={false}
+                />
               </ListItemIcon>
 
               <ListItemText
