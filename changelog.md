@@ -1,3 +1,7 @@
+1.4.15
+=================================
+- Update Notify query
+
 1.4.14
 =================================
 - Added ChatMessage link in list

@@ -504,6 +504,12 @@ class ContextProvider extends Component {
             ...ChatRoomNoNesting
           }
         }
+        User{
+          ...UserNoNesting
+        }
+        CreatedBy{
+          ...UserNoNesting
+        }
       }
 
       ${NoticeNoNestingFragment}

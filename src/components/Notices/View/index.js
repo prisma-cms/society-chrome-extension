@@ -227,13 +227,13 @@ class NoticesList extends PrismaCmsComponent {
           {
             const {
               ChatRoomInvitation,
+              CreatedBy,
             } = n;
 
             const {
               // id: messageId,
               contentText,
               ChatRoom: Room,
-              CreatedBy,
             } = ChatRoomInvitation || {};
 
             let secondary = <ChatRoomLink
