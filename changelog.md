@@ -1,3 +1,8 @@
+1.4.16
+=================================
+- Switch deleteManyNotices to deleteNotice
+- Update subscriptions
+
 1.4.15
 =================================
 - Update Notify query
