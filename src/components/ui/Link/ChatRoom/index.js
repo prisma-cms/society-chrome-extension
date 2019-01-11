@@ -5,6 +5,8 @@ import Typography from "material-ui/Typography";
 
 import Context from "@prisma-cms/context";
 
+import OpenInBrowserIcon from "material-ui-icons/OpenInBrowser";
+
 export class ChatRoomLink extends Component {
 
 
@@ -25,6 +27,7 @@ export class ChatRoomLink extends Component {
 
     const {
       Link,
+      Grid,
     } = this.context;
 
     let {
@@ -38,17 +41,44 @@ export class ChatRoomLink extends Component {
       return null;
     }
 
-    return <Link
-      to={`/chat-rooms/${id}`}
-      title={name}
-      {...other}
+    const url = `/chat-rooms/${id}`;
+
+    return <Grid
+      container
     >
-      {children || <Typography
-        component="span"
+      <Grid
+        item
       >
-        {name}
-      </Typography>}
-    </Link>
+        <Link
+          to={url}
+          title={name}
+          {...other}
+        >
+          {children || <Typography
+            component="span"
+          >
+            {name}
+          </Typography>}
+        </Link>
+      </Grid>
+      <Grid
+        item
+      >
+        <a
+          href={`https://modxclub.ru${url}`}
+          title={name}
+          target="_blank"
+        >
+          <Typography
+            component="span"
+          >
+            <OpenInBrowserIcon
+
+            />
+          </Typography>
+        </a>
+      </Grid>
+    </Grid>
   }
 }
 

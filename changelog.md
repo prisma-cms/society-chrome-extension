@@ -1,3 +1,7 @@
+1.5.0
+=================================
+- Public release
+
 1.4.15
 =================================
 - Update Notify query
@@ -123,4 +127,3 @@
 - Added App tests
 - Added serviceWorker tests
 - Added proxy tests
-

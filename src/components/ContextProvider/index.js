@@ -3,7 +3,6 @@ import React, {
   Component,
 } from 'react';
 
-
 import Context from '@prisma-cms/context';
 
 import * as UI from "../ui";
@@ -57,8 +56,14 @@ class ContextProvider extends Component {
 
   }
 
-
   prepareQuery() {
+
+    return {
+      ...this.prepareUserQuery(),
+    }
+  }
+
+  prepareUserQuery() {
 
 
     return {

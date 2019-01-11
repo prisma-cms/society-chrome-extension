@@ -4,10 +4,12 @@ import Typography from "material-ui/Typography";
 
 
 import Context from "@prisma-cms/context";
- 
+
+import OpenInBrowserIcon from "material-ui-icons/OpenInBrowser";
+
 export class ChatMessageLink extends Component {
 
-  
+
   static contextType = Context;
 
   render() {
@@ -25,6 +27,7 @@ export class ChatMessageLink extends Component {
 
     const {
       Link,
+      Grid,
     } = this.context;
 
     const {
@@ -38,17 +41,48 @@ export class ChatMessageLink extends Component {
 
     const name = id;
 
-    return <Link
-      to={`/chat-messages/${id}`}
-      title={name}
-      {...other}
+    const url = `/chat-messages/${id}`;
+
+
+    return <Grid
+      container
+      spacing={8}
+      alignItems="center"
     >
-      {children || <Typography
-        component="span"
+      <Grid
+        item
       >
-        {name}
-      </Typography>}
-    </Link>
+        <Link
+          to={url}
+          title={name}
+          {...other}
+        >
+          {children || <Typography
+            component="span"
+          >
+            {name}
+          </Typography>}
+        </Link>
+      </Grid>
+      <Grid
+        item
+      >
+        <a
+          href={`https://modxclub.ru${url}`}
+          title={name}
+          target="_blank"
+        >
+          <Typography
+            component="span"
+          >
+            <OpenInBrowserIcon
+
+            />
+          </Typography>
+        </a>
+      </Grid>
+    </Grid>
+
   }
 }
 

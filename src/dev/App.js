@@ -7,6 +7,7 @@ import * as queryFragments from "../schema/generated/api.fragments";
 
 import DevRenderer from "./Renderer";
 
+window.link = "Sdfewfwefedsfdsfs"
 
 export default class DevApp extends Component {
 
@@ -27,6 +28,10 @@ export default class DevApp extends Component {
 
     return <PrismaCmsApp
       Renderer={DevRenderer}
+      apolloOptions={{
+        // endpoint: "https://modxclub.ru/api/"
+        endpoint: "http://localhost:4000"
+      }}
       // pure={true}
       {...other}
     />
