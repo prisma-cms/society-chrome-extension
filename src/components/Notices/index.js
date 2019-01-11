@@ -32,6 +32,7 @@ class Notices extends PrismaCmsComponent {
       query: {
         noticesConnection,
         deleteManyNotices,
+        deleteNotice,
       },
     } = this.context;
 
@@ -43,6 +44,9 @@ class Notices extends PrismaCmsComponent {
       graphql(gql(noticesConnection)),
       graphql(gql(deleteManyNotices), {
         name: "deleteManyNotices",
+      }),
+      graphql(gql(deleteNotice), {
+        name: "deleteNotice",
       }),
     )(View);
 

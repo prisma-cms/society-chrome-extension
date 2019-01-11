@@ -72,7 +72,7 @@ class NoticesList extends PrismaCmsComponent {
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
     classes: PropTypes.object.isRequired,
-    deleteManyNotices: PropTypes.func.isRequired,
+    deleteNotice: PropTypes.func.isRequired,
   };
 
 
@@ -128,7 +128,7 @@ class NoticesList extends PrismaCmsComponent {
 
     const {
       classes,
-      deleteManyNotices,
+      deleteNotice,
       data: {
         refetch,
       },
@@ -198,7 +198,7 @@ class NoticesList extends PrismaCmsComponent {
                         inRequest: noticeId,
                       });
 
-                      await deleteManyNotices({
+                      await deleteNotice({
                         variables: {
                           where: {
                             id: noticeId,
@@ -278,7 +278,7 @@ class NoticesList extends PrismaCmsComponent {
                         inRequest: noticeId,
                       });
 
-                      await deleteManyNotices({
+                      await deleteNotice({
                         variables: {
                           where: {
                             id: noticeId,
