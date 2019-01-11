@@ -1,0 +1,22 @@
+{
+	"manifest_version": 2,
+	"name": "modxclub.ru",
+	"description": "MODX-Клуб",
+	"version": "1.0.0",
+	"icons": {"128": "public/modx_128.png"},
+	"browser_action": {
+		"default_icon": "public/modx_128.png",
+		"default_popup": "build/index.html"
+	},
+	"content_security_policy": "script-src 'self' 'unsafe-eval' 'sha256-IThiKMnsg0UHaLmP7sJxZpd/ohvINImwjxFJyxGFSlk='; object-src 'self'",
+	"background": {
+    "scripts": [
+			"umd/@prisma-cms/society-extension.js",
+			"myscript.js"
+		],
+    "persistent": true
+  },
+  "content_scripts": [ 
+  ],
+	"permissions": ["activeTab", "debugger", "<all_urls>", "webNavigation", "notifications"]
+}

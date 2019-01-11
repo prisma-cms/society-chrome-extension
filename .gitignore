@@ -10,6 +10,7 @@
 /build
 /es
 /lib
+/umd
 
 # misc
 .DS_Store
