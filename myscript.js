@@ -14,10 +14,19 @@ function startWebWorkers() {
 
 
   const {
-    client,
     gql,
+    createClient,
+    // client,
   } = window;
 
+
+  const httpUri = "http://localhost:4000";
+
+  const wsUri = "ws://localhost:4000";
+
+  const client = createClient(httpUri, wsUri);
+
+  window.client = client;
 
   // chrome.bookmarks.onCreated.addListener(function() {
   //   console.log("onCreate");
@@ -433,7 +442,7 @@ function startWebWorkers() {
                             console.log("MyOpen", event);
                           }
 
-                          const url = chatRoomId ? `https://modxclub.ru/chat-rooms/${chatRoomid}` : `https://modxclub.ru/chat-messages/${messageId}`;
+                          const url = chatRoomId ? `https://modxclub.ru/chat-rooms/${chatRoomId}` : `https://modxclub.ru/chat-messages/${messageId}`;
 
                           let options = {
                             body,

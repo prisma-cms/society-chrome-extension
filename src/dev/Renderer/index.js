@@ -143,8 +143,18 @@ class DevRenderer extends PrismaCmsRenderer {
 
   renderWrapper() {
 
+    const {
+      user: currentUser,
+    } = this.context;
+
+    const {
+      id: currentUserId,
+    } = currentUser || {};
+
     return <ContextProvider>
-      <SubscriptionProvider>
+      <SubscriptionProvider
+        key={currentUserId}
+      >
         {super.renderWrapper()}
       </SubscriptionProvider>
     </ContextProvider>;
