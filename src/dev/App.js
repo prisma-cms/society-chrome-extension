@@ -29,8 +29,8 @@ export default class DevApp extends Component {
     return <PrismaCmsApp
       Renderer={DevRenderer}
       apolloOptions={{
-        // endpoint: "https://modxclub.ru/api/"
-        endpoint: "http://localhost:4000"
+        endpoint: "https://modxclub.ru/api/"
+        // endpoint: "http://localhost:4000"
       }}
       // pure={true}
       {...other}

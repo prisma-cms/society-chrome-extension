@@ -11,7 +11,7 @@
 	"content_security_policy": "script-src 'self' 'unsafe-eval' 'sha256-IThiKMnsg0UHaLmP7sJxZpd/ohvINImwjxFJyxGFSlk='; object-src 'self'",
 	"background": {
     "scripts": [
-			"umd/@prisma-cms/society-extension.js",
+			"umd/@prisma-cms/society-chrome-extension.js",
 			"myscript.js"
 		],
     "persistent": true

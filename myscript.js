@@ -20,9 +20,11 @@ function startWebWorkers() {
   } = window;
 
 
-  const httpUri = "http://localhost:4000";
+  // const httpUri = "http://localhost:4000";
+  const httpUri = "https://modxclub.ru/api/";
 
-  const wsUri = "ws://localhost:4000";
+  // const wsUri = "ws://localhost:4000";
+  const wsUri = "wss://modxclub.ru/api/";
 
   const client = createClient(httpUri, wsUri);
 
@@ -63,24 +65,25 @@ function startWebWorkers() {
           active,
         } = registration;
 
-
-        registration.addEventListener("activate", (event) => {
-
-
-        })
-
         var serviceWorker;
 
 
         if (registration.installing) {
           // serviceWorker = registration.installing;
           // document.querySelector('#kind').textContent = 'installing';
+
+          console.log("registration.installing", registration.installing);
+
         } else if (registration.waiting) {
           // serviceWorker = registration.waiting;
           // document.querySelector('#kind').textContent = 'waiting';
+
+          console.log("registration.waiting", registration.waiting);
         } else if (registration.active) {
           serviceWorker = registration.active;
           // document.querySelector('#kind').textContent = 'active';
+
+          console.log("registration active", registration.active);
         }
 
 
@@ -183,6 +186,7 @@ function startWebWorkers() {
 
           registration.addEventListener("activate", (event, data) => {
 
+            console.log("addEventListener activate", event, data);
 
           });
 
@@ -191,11 +195,9 @@ function startWebWorkers() {
             // logState(e.target.state);
           });
 
+        }
 
-          serviceWorker.addEventListener("activate", (event, data) => {
-
-
-          });
+        if (true) {
 
 
           let subscriptions = []
@@ -208,9 +210,8 @@ function startWebWorkers() {
           if (client) {
 
 
-
             /**
-             * Поулчаем текущего пользователя
+             * Получаем текущего пользователя
              */
             const me = gql`
               query me{
@@ -232,6 +233,7 @@ function startWebWorkers() {
                 user: currentUser,
               } = r && r.data || {};
 
+              // console.log("currentUser", currentUser);
 
               /**
                * Если не был получен, возвращаем ошибку.

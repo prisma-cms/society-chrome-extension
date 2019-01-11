@@ -1,5 +1,5 @@
 {
-  "name": "@prisma-cms/society-extension",
+  "name": "@prisma-cms/society-chrome-extension",
   "version": "1.5.0",
   "private": false,
   "main": "lib/App.js",
@@ -49,5 +49,13 @@
     "components"
   ],
   "author": "Fi1osof",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prisma-cms/society-chrome-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prisma-cms/society-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/prisma-cms/society-chrome-extension#readme"
 }
