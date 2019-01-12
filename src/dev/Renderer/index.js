@@ -62,11 +62,11 @@ class DevRenderer extends PrismaCmsRenderer {
     let routes = super.getRoutes();
 
     return [
-      {
-        exact: true,
-        path: "/",
-        component: App,
-      },
+      // {
+      //   exact: true,
+      //   path: "/",
+      //   component: App,
+      // },
       {
         exact: true,
         path: "/chat-rooms",
@@ -99,11 +99,11 @@ class DevRenderer extends PrismaCmsRenderer {
           />
         },
       },
-      {
-        exact: true,
-        path: "/chat-messages",
-        component: ChatMessages,
-      },
+      // {
+      //   exact: true,
+      //   path: "/chat-messages",
+      //   component: ChatMessages,
+      // },
       {
         exact: true,
         path: "/chat-messages/:id",
@@ -126,10 +126,13 @@ class DevRenderer extends PrismaCmsRenderer {
           />
         },
       },
-      // {
-      //   path: "*",
-      //   render: props => this.renderOtherPages(props),
-      // },
+      {
+        path: "*",
+        render: props => <ChatMessages
+          orderBy="createdAt_DESC"
+          {...props}
+        />,
+      },
     ].concat(routes);
 
   }

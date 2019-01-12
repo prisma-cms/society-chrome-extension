@@ -7,6 +7,8 @@ import "./client";
 const element = document.getElementById('root');
 
 if(element) {
-  ReactDOM.render(<App />, element);
+  ReactDOM.render(<App
+    assetsBaseUrl="https://modxclub.ru/"
+  />, element);
 }
 
